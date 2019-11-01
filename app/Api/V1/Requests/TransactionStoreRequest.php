@@ -58,8 +58,9 @@ class TransactionStoreRequest extends Request
     public function getAll(): array
     {
         $data = [
-            'group_title'  => $this->string('group_title'),
-            'transactions' => $this->getTransactionData(),
+            'group_title'             => $this->string('group_title'),
+            'error_if_duplicate_hash' => $this->boolean('error_if_duplicate_hash'),
+            'transactions'            => $this->getTransactionData(),
         ];
 
         return $data;
@@ -74,7 +75,8 @@ class TransactionStoreRequest extends Request
     {
         $rules = [
             // basic fields for group:
-            'group_title'                          => 'between:1,1000',
+            'group_title'                          => 'between:1,1000|nullable',
+            'error_if_duplicate_hash'              => [new IsBoolean],
 
             // transaction rules (in array for splits):
             'transactions.*.type'                  => 'required|in:withdrawal,deposit,transfer,opening-balance,reconciliation',
@@ -82,14 +84,14 @@ class TransactionStoreRequest extends Request
             'transactions.*.order'                 => 'numeric|min:0',
 
             // currency info
-            'transactions.*.currency_id'           => 'numeric|exists:transaction_currencies,id',
-            'transactions.*.currency_code'         => 'min:3|max:3|exists:transaction_currencies,code',
-            'transactions.*.foreign_currency_id'   => 'numeric|exists:transaction_currencies,id',
-            'transactions.*.foreign_currency_code' => 'min:3|max:3|exists:transaction_currencies,code',
+            'transactions.*.currency_id'           => 'numeric|exists:transaction_currencies,id|nullable',
+            'transactions.*.currency_code'         => 'min:3|max:3|exists:transaction_currencies,code|nullable',
+            'transactions.*.foreign_currency_id'   => 'numeric|exists:transaction_currencies,id|nullable',
+            'transactions.*.foreign_currency_code' => 'min:3|max:3|exists:transaction_currencies,code|nullable',
 
             // amount
             'transactions.*.amount'                => 'required|numeric|more:0',
-            'transactions.*.foreign_amount'        => 'numeric|more:0',
+            'transactions.*.foreign_amount'        => 'numeric',
 
             // description
             'transactions.*.description'           => 'nullable|between:1,1000',
@@ -97,10 +99,16 @@ class TransactionStoreRequest extends Request
             // source of transaction
             'transactions.*.source_id'             => ['numeric', 'nullable', new BelongsUser],
             'transactions.*.source_name'           => 'between:1,255|nullable',
+            'transactions.*.source_iban'           => 'between:1,255|nullable|iban',
+            'transactions.*.source_number'         => 'between:1,255|nullable',
+            'transactions.*.source_bic'            => 'between:1,255|nullable|bic',
 
             // destination of transaction
             'transactions.*.destination_id'        => ['numeric', 'nullable', new BelongsUser],
             'transactions.*.destination_name'      => 'between:1,255|nullable',
+            'transactions.*.destination_iban'      => 'between:1,255|nullable|iban',
+            'transactions.*.destination_number'    => 'between:1,255|nullable',
+            'transactions.*.destination_bic'       => 'between:1,255|nullable|bic',
 
             // budget, category, bill and piggy
             'transactions.*.budget_id'             => ['mustExist:budgets,id', new BelongsUser],
@@ -202,7 +210,7 @@ class TransactionStoreRequest extends Request
                 'date'  => $this->dateFromValue($object['date']),
                 'order' => $this->integerFromValue((string)$object['order']),
 
-                'currency_id'           => $this->integerFromValue($object['currency_id']),
+                'currency_id'           => $this->integerFromValue((string)$object['currency_id']),
                 'currency_code'         => $this->stringFromValue($object['currency_code']),
 
                 // foreign currency info:
@@ -219,10 +227,16 @@ class TransactionStoreRequest extends Request
                 // source of transaction. If everything is null, assume cash account.
                 'source_id'             => $this->integerFromValue((string)$object['source_id']),
                 'source_name'           => $this->stringFromValue($object['source_name']),
+                'source_iban'           => $this->stringFromValue($object['source_iban']),
+                'source_number'         => $this->stringFromValue($object['source_number']),
+                'source_bic'            => $this->stringFromValue($object['source_bic']),
 
                 // destination of transaction. If everything is null, assume cash account.
                 'destination_id'        => $this->integerFromValue((string)$object['destination_id']),
                 'destination_name'      => $this->stringFromValue($object['destination_name']),
+                'destination_iban'      => $this->stringFromValue($object['destination_iban']),
+                'destination_number'    => $this->stringFromValue($object['destination_number']),
+                'destination_bic'       => $this->stringFromValue($object['destination_bic']),
 
                 // budget info
                 'budget_id'             => $this->integerFromValue((string)$object['budget_id']),

@@ -108,9 +108,19 @@ Route::group(
 );
 
 
+//// show inactive
+//
+
 /**
  * Account Controller
  */
+Route::group(
+    ['middleware' => 'user-full-auth', 'namespace' => 'FireflyIII\Http\Controllers', 'prefix' => 'inactive-accounts', 'as' => 'accounts.'], static function () {
+    Route::get('{objectType}', ['uses' => 'Account\IndexController@inactive', 'as' => 'inactive.index'])->where(
+        'objectType', 'revenue|asset|expense|liabilities'
+    );
+}
+);
 Route::group(
     ['middleware' => 'user-full-auth', 'namespace' => 'FireflyIII\Http\Controllers', 'prefix' => 'accounts', 'as' => 'accounts.'], static function () {
 
@@ -948,13 +958,13 @@ Route::group(
     Route::post('destroy/{transactionGroup}', ['uses' => 'Transaction\DeleteController@destroy', 'as' => 'destroy']);
 
     // clone group:
-    Route::get('clone/{transactionGroup}', ['uses' => 'Transaction\CloneController@clone', 'as' => 'clone']);
+    //Route::get('clone/{transactionGroup}', ['uses' => 'Transaction\CloneController@clone', 'as' => 'clone']);
 
     //Route::get('debug/{tj}', ['uses' => 'Transaction\SingleController@debugShow', 'as' => 'debug']);
     //Route::get('debug/{tj}', ['uses' => 'Transaction\SingleController@debugShow', 'as' => 'debug']);
 
-    Route::post('reorder', ['uses' => 'TransactionController@reorder', 'as' => 'reorder']);
-    Route::post('reconcile', ['uses' => 'TransactionController@reconcile', 'as' => 'reconcile']);
+    //Route::post('reorder', ['uses' => 'TransactionController@reorder', 'as' => 'reorder']);
+    //Route::post('reconcile', ['uses' => 'TransactionController@reconcile', 'as' => 'reconcile']);
     // TODO end of improvement.
 
 

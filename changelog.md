@@ -2,6 +2,59 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+
+## [4.8.1.8 (API 0.10.5)] - 2019-10-26
+
+### Fixed
+- [Issue 2773](https://github.com/firefly-iii/firefly-iii/issues/2773) Error when importing transactions.
+
+## [4.8.1.7 (API 0.10.5)] - 2019-10-26
+
+### Fixed
+- Error when creating transactions from the index of Firefly III.
+
+### API
+- Firefly III can filter duplicate transactions.
+- New endpoint that can search for specific transfers.
+
+## [4.8.1.6 (API 0.10.4)] - 2019-10-25
+
+### Fixed
+- Redirecting to an URL with parameters works well now for editing and creating transactions.
+- [Issue 2756](https://github.com/firefly-iii/firefly-iii/issues/2756) Search was broken due to left-over debug statements.
+- [Issue 2757](https://github.com/firefly-iii/firefly-iii/issues/2757) 2FA was broken due to a changed library.
+- [Issue 2758](https://github.com/firefly-iii/firefly-iii/issues/2758) A debug command courtesy of Laravel wouldn't work due to invalid routes.
+- [Issue 2701](https://github.com/firefly-iii/firefly-iii/issues/2701) Fixed a never-ending loop.
+
+## [4.8.1.5 (API 0.10.4)] - 2019-10-21
+
+### Added
+- [Issue 2694](https://github.com/firefly-iii/firefly-iii/issues/2694) Special page for archived accounts.
+
+### Changed
+- [Issue 2540](https://github.com/firefly-iii/firefly-iii/issues/2540) Partly translated transaction edit/create form.
+- [Issue 2655](https://github.com/firefly-iii/firefly-iii/issues/2655) Link to Firefly III's base Docker image.
+- [Issue 2724](https://github.com/firefly-iii/firefly-iii/issues/2724) Cleanup some JS output.
+- [Issue 2734](https://github.com/firefly-iii/firefly-iii/issues/2734) Put personal access token in textarea for easier copy/pasting.
+- [Issue 2728](https://github.com/firefly-iii/firefly-iii/issues/2728) Remove superfluous currency names.
+
+### Fixed
+- [Issue 2699](https://github.com/firefly-iii/firefly-iii/issues/2699) Internal cache wouldn't update.
+- [Issue 2713](https://github.com/firefly-iii/firefly-iii/issues/2713) Could not search for numerical values.
+- [Issue 2716](https://github.com/firefly-iii/firefly-iii/issues/2716) Could not reset intro popups.
+- [Issue 2701](https://github.com/firefly-iii/firefly-iii/issues/2701) Temporary fix for timeouts.
+- [Issue 2727](https://github.com/firefly-iii/firefly-iii/issues/2727) CSP headers too strict.
+- [Issue 2731](https://github.com/firefly-iii/firefly-iii/issues/2731) Too strict config vars.
+- [Issue 2754](https://github.com/firefly-iii/firefly-iii/issues/2754) Memcached config would error out.
+- [Issue 2746](https://github.com/firefly-iii/firefly-iii/issues/2746) Cache would not clear after firing recurring transactions.
+- [Issue 2755](https://github.com/firefly-iii/firefly-iii/issues/2755) Making a rule inactive would still fire it.
+
+### API
+- [Issue 2698](https://github.com/firefly-iii/firefly-iii/issues/2698) Fix return value in API.
+- [Issue 2753](https://github.com/firefly-iii/firefly-iii/issues/2753) Was possible to upload and manage empty attachments.
+- New accounts submitted through the API may include account number, BIC and IBAN data.
+- New end point to support [issue 2752](https://github.com/firefly-iii/firefly-iii/issues/2752).
+
 ## [4.8.1.4 (API 0.10.3)] - 2019-10-05
 
 Emergency fix because I borked the upgrade routine. I apologise for the inconvenience.

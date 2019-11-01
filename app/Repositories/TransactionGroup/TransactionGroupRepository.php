@@ -27,6 +27,7 @@ namespace FireflyIII\Repositories\TransactionGroup;
 use Carbon\Carbon;
 use DB;
 use Exception;
+use FireflyIII\Exceptions\DuplicateTransactionException;
 use FireflyIII\Exceptions\FireflyException;
 use FireflyIII\Factory\TransactionGroupFactory;
 use FireflyIII\Models\AccountMeta;
@@ -97,6 +98,7 @@ class TransactionGroupRepository implements TransactionGroupRepositoryInterface
         $journals = $group->transactionJournals->pluck('id')->toArray();
         $set      = Attachment::whereIn('attachable_id', $journals)
                               ->where('attachable_type', TransactionJournal::class)
+                              ->where('uploaded', 1)
                               ->whereNull('deleted_at')->get();
 
         $result = [];
@@ -313,6 +315,7 @@ class TransactionGroupRepository implements TransactionGroupRepositoryInterface
      * @param array $data
      *
      * @return TransactionGroup
+     * @throws DuplicateTransactionException
      */
     public function store(array $data): TransactionGroup
     {

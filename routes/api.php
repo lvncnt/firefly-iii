@@ -342,6 +342,7 @@ Route::group(
         // Attachment API routes:
         Route::get('transactions', ['uses' => 'TransactionController@search', 'as' => 'transactions']);
         Route::get('accounts', ['uses' => 'AccountController@search', 'as' => 'accounts']);
+        Route::get('transfers', ['uses' => 'TransferController@search', 'as' => 'transfers']);
     }
 );
 
@@ -421,6 +422,17 @@ Route::group(
         Route::put('{transactionGroup}', ['uses' => 'TransactionController@update', 'as' => 'update']);
         Route::delete('{transactionGroup}/{transactionJournal}', ['uses' => 'TransactionController@deleteJournal', 'as' => 'delete-journal']);
         Route::delete('{transactionGroup}', ['uses' => 'TransactionController@delete', 'as' => 'delete']);
+    }
+);
+
+// special group for transaction journals
+Route::group(
+    ['namespace' => 'FireflyIII\Api\V1\Controllers', 'prefix' => 'transaction-journals',
+     'as'         => 'api.v1.journals.'],
+    static function () {
+
+        // Transaction API routes:
+        Route::get('{tj}', ['uses' => 'TransactionController@showByJournal', 'as' => 'showByJournal']);
     }
 );
 
