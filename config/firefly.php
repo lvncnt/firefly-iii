@@ -125,7 +125,7 @@ return [
         'is_demo_site'     => false,
     ],
     'encryption'                   => null === env('USE_ENCRYPTION') || env('USE_ENCRYPTION') === true,
-    'version'                      => '4.8.1.8',
+    'version'                      => '4.8.2-beta.2',
     'api_version'                  => '0.10.5',
     'db_version'                   => 11,
     'maxUploadSize'                => 15242880,
@@ -145,6 +145,7 @@ return [
     'disable_frame_header'         => env('DISABLE_FRAME_HEADER', false),
     'login_provider'               => envNonEmpty('LOGIN_PROVIDER', 'eloquent'),
     'cer_provider'                 => envNonEmpty('CER_PROVIDER', 'fixer'),
+    'update_endpoint'              => 'https://version.firefly-iii.org/index.json',
     'allowedMimes'                 => [
         /* plain files */
         'text/plain',
@@ -290,35 +291,30 @@ return [
         'Mortgage'    => 'mortgage',
     ],
     'languages'                    => [
-        'en_US' => ['name_locale' => 'English', 'name_english' => 'English'],  // 4.8,1
-        'cs_CZ' => ['name_locale' => 'Czech', 'name_english' => 'Czech'],      // 4.8,1
-        'es_ES' => ['name_locale' => 'Español', 'name_english' => 'Spanish'],  // 4.8,1
-        'de_DE' => ['name_locale' => 'Deutsch', 'name_english' => 'German'],   // 4.8,1
-        'fr_FR' => ['name_locale' => 'Français', 'name_english' => 'French'],  // 4.8,1
-        //'id_ID' => ['name_locale' => 'Bahasa Indonesia', 'name_english' => 'Indonesian'], // 57%, removed
-        'it_IT' => ['name_locale' => 'Italiano', 'name_english' => 'Italian'], // 4.8,1
-        'nb_NO' => ['name_locale' => 'Norsk', 'name_english' => 'Norwegian'],  // 4.8,1
-        'nl_NL' => ['name_locale' => 'Nederlands', 'name_english' => 'Dutch'], // 4.8,1
-        'pl_PL' => ['name_locale' => 'Polski', 'name_english' => 'Polish '],   // 4.8,1
-        'pt_BR' => ['name_locale' => 'Português do Brasil', 'name_english' => 'Portuguese (Brazil)'], // 4.8,1
-        'ro_RO' => ['name_locale' => 'Română', 'name_english' => 'Romanian'], // 4.8,1
-        'ru_RU' => ['name_locale' => 'Русский', 'name_english' => 'Russian'], // 4.8,1
-        'zh_TW' => ['name_locale' => 'Chinese Traditional', 'name_english' => 'Chinese Traditional'], // 4.8,1
-        'zh_CN' => ['name_locale' => 'Chinese Simplified', 'name_english' => 'Chinese Simplified'],   // 4.8,1
-        'hu_HU' => ['name_locale' => 'Hungarian', 'name_english' => 'Hungarian'], // 4.8,1
+        'en_US' => ['name_locale' => 'English', 'name_english' => 'English'],
+        'cs_CZ' => ['name_locale' => 'Czech', 'name_english' => 'Czech'],
+        'es_ES' => ['name_locale' => 'Español', 'name_english' => 'Spanish'],
+        'de_DE' => ['name_locale' => 'Deutsch', 'name_english' => 'German'],
+        'fr_FR' => ['name_locale' => 'Français', 'name_english' => 'French'],
+        'it_IT' => ['name_locale' => 'Italiano', 'name_english' => 'Italian'],
+        'nb_NO' => ['name_locale' => 'Norsk', 'name_english' => 'Norwegian'],
+        'nl_NL' => ['name_locale' => 'Nederlands', 'name_english' => 'Dutch'],
+        'pl_PL' => ['name_locale' => 'Polski', 'name_english' => 'Polish '],
+        'pt_BR' => ['name_locale' => 'Português do Brasil', 'name_english' => 'Portuguese (Brazil)'],
+        'ro_RO' => ['name_locale' => 'Română', 'name_english' => 'Romanian'],
+        'ru_RU' => ['name_locale' => 'Русский', 'name_english' => 'Russian'],
+        'zh_TW' => ['name_locale' => 'Chinese Traditional', 'name_english' => 'Chinese Traditional'],
+        'zh_CN' => ['name_locale' => 'Chinese Simplified', 'name_english' => 'Chinese Simplified'],
+        'hu_HU' => ['name_locale' => 'Hungarian', 'name_english' => 'Hungarian'],
+        'sv_SE' => ['name_locale' => 'Svenska', 'name_english' => 'Swedish'],
+        //'el_GR' => ['name_locale' => 'Ελληνικά', 'name_english' => 'Greek'], // dropped to 65%
 
-        // new since 4.8,1
-        'el_GR' => ['name_locale' => 'Ελληνικά', 'Greek' => 'Hungarian'], // 4.8,1
-
-        // greek: Ελληνικά
-
-        // Czech not yet.
-
+        //'id_ID' => ['name_locale' => 'Bahasa Indonesia', 'name_english' => 'Indonesian'],
         //'tr_TR' => ['name_locale' => 'Türkçe', 'name_english' => 'Turkish'], // 71%
         //'ca_ES' => ['name_locale' => 'Catalan', 'name_english' => 'Catalan'], // 0%
         //'ja_JA' => ['name_locale' => 'Japanese', 'name_english' => 'Japanese'], // 0%
         //'he_IL' => ['name_locale' => 'Hebrew', 'name_english' => 'Hebrew'], // 2%
-        //'sv_SE' => ['name_locale' => 'Svenska', 'name_english' => 'Swedish'], // 1%
+        //
         //'sr_CS' => ['name_locale' => 'Serbian (Latin)', 'name_english' => 'Serbian (Latin)'], // 0%
         //'sl_SI' => ['name_locale' => 'Slovenian', 'name_english' => 'Slovenian'], // 10%
         //'uk_UA' => ['name_locale' => 'Ukranian', 'name_english' => 'Ukranian'], // 4%
@@ -479,8 +475,8 @@ return [
         'append_notes',
         'prepend_notes',
         'link_to_bill',
-        'convert_withdrawal',
-        'convert_deposit',
+        //'convert_withdrawal',
+        //'convert_deposit',
         'convert_transfer',
     ],
     'context-rule-triggers'        => [
@@ -683,13 +679,13 @@ return [
     'source_dests'              => [
         TransactionTypeModel::WITHDRAWAL      => [
             AccountType::ASSET    => [AccountType::EXPENSE, AccountType::LOAN, AccountType::DEBT, AccountType::MORTGAGE, AccountType::CASH],
-            AccountType::LOAN     => [AccountType::EXPENSE],
-            AccountType::DEBT     => [AccountType::EXPENSE],
-            AccountType::MORTGAGE => [AccountType::EXPENSE],
+            AccountType::LOAN     => [AccountType::EXPENSE, AccountType::CASH],
+            AccountType::DEBT     => [AccountType::EXPENSE, AccountType::CASH],
+            AccountType::MORTGAGE => [AccountType::EXPENSE, AccountType::CASH],
         ],
         TransactionTypeModel::DEPOSIT         => [
             AccountType::REVENUE  => [AccountType::ASSET, AccountType::LOAN, AccountType::DEBT, AccountType::MORTGAGE],
-            AccountType::CASH     => [AccountType::ASSET],
+            AccountType::CASH     => [AccountType::ASSET, AccountType::LOAN, AccountType::DEBT, AccountType::MORTGAGE],
             AccountType::LOAN     => [AccountType::ASSET],
             AccountType::DEBT     => [AccountType::ASSET],
             AccountType::MORTGAGE => [AccountType::ASSET],

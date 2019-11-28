@@ -54,6 +54,7 @@ if [[ ! -z "$DB_PORT" ]]; then
 fi
 #env $(grep -v "^\#" .env | xargs) 
 php artisan cache:clear
+php artisan firefly-iii:create-database
 php artisan migrate --seed
 php artisan firefly-iii:decrypt-all
 
@@ -93,6 +94,7 @@ php artisan firefly-iii:fix-long-descriptions
 php artisan firefly-iii:report-empty-objects
 php artisan firefly-iii:report-sum
 php artisan firefly-iii:restore-oauth-keys
+php artisan firefly-iii:set-latest-version --james-is-cool
 
 php artisan passport:install
 php artisan cache:clear

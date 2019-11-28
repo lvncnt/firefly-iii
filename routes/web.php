@@ -556,6 +556,7 @@ Route::group(
     Route::get('accounts', ['uses' => 'Json\AutoCompleteController@accounts', 'as' => 'autocomplete.accounts']);
     Route::get('revenue-accounts', ['uses' => 'Json\AutoCompleteController@revenueAccounts', 'as' => 'autocomplete.revenue-accounts']);
     Route::get('expense-accounts', ['uses' => 'Json\AutoCompleteController@expenseAccounts', 'as' => 'autocomplete.expense-accounts']);
+    Route::get('asset-accounts', ['uses' => 'Json\AutoCompleteController@assetAccounts', 'as' => 'autocomplete.asset-accounts']);
     Route::get('budgets', ['uses' => 'Json\AutoCompleteController@budgets', 'as' => 'autocomplete.budgets']);
     Route::get('categories', ['uses' => 'Json\AutoCompleteController@categories', 'as' => 'autocomplete.categories']);
     Route::get('currencies', ['uses' => 'Json\AutoCompleteController@currencies', 'as' => 'autocomplete.currencies']);
@@ -1080,7 +1081,7 @@ Route::group(
 
     // check for updates?
     Route::get('update-check', ['uses' => 'UpdateController@index', 'as' => 'update-check']);
-    Route::post('update-check/manual', ['uses' => 'UpdateController@updateCheck', 'as' => 'update-check.manual']);
+    Route::any('update-check/manual', ['uses' => 'UpdateController@updateCheck', 'as' => 'update-check.manual']);
     Route::post('update-check', ['uses' => 'UpdateController@post', 'as' => 'update-check.post']);
 
     // user manager
