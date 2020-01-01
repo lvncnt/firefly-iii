@@ -83,28 +83,46 @@
                                     >
                                     </transaction-description>
                                     <account-select v-if="transactionType.toLowerCase() !== 'reconciliation'"
-                                            inputName="source[]"
-                                            v-bind:title="$t('firefly.source_account')"
-                                            :accountName="transaction.source_account.name"
-                                            :accountTypeFilters="transaction.source_account.allowed_types"
-                                            :transactionType="transactionType"
-                                            :index="index"
-                                            v-on:clear:value="clearSource(index)"
-                                            v-on:select:account="selectedSourceAccount(index, $event)"
-                                            :error="transaction.errors.source_account"
+                                                    inputName="source[]"
+                                                    v-bind:title="$t('firefly.source_account')"
+                                                    :accountName="transaction.source_account.name"
+                                                    :accountTypeFilters="transaction.source_account.allowed_types"
+                                                    :transactionType="transactionType"
+                                                    :index="index"
+                                                    v-on:clear:value="clearSource(index)"
+                                                    v-on:select:account="selectedSourceAccount(index, $event)"
+                                                    :error="transaction.errors.source_account"
                                     ></account-select>
+                                    <div class="form-group" v-if="transactionType.toLowerCase() === 'reconciliation'">
+                                        <div class="col-sm-12">
+                                            <p id="ffInput_source" class="form-control-static">
+                                                <em>
+                                                {{ $t('firefly.source_account_reconciliation') }}
+                                                </em>
+                                            </p>
+                                        </div>
+                                    </div>
                                     <account-select v-if="transactionType.toLowerCase() !== 'reconciliation'"
-                                            inputName="destination[]"
-                                            v-bind:title="$t('firefly.destination_account')"
-                                            :accountName="transaction.destination_account.name"
-                                            :accountTypeFilters="transaction.destination_account.allowed_types"
-                                            :transactionType="transactionType"
-                                            :index="index"
-                                            v-on:clear:value="clearDestination(index)"
-                                            v-on:select:account="selectedDestinationAccount(index, $event)"
-                                            :error="transaction.errors.destination_account"
+                                                    inputName="destination[]"
+                                                    v-bind:title="$t('firefly.destination_account')"
+                                                    :accountName="transaction.destination_account.name"
+                                                    :accountTypeFilters="transaction.destination_account.allowed_types"
+                                                    :transactionType="transactionType"
+                                                    :index="index"
+                                                    v-on:clear:value="clearDestination(index)"
+                                                    v-on:select:account="selectedDestinationAccount(index, $event)"
+                                                    :error="transaction.errors.destination_account"
                                     ></account-select>
-                                    <standard-date  v-if="transactionType.toLowerCase() !== 'reconciliation'"
+                                    <div class="form-group" v-if="transactionType.toLowerCase() === 'reconciliation'">
+                                        <div class="col-sm-12">
+                                            <p id="ffInput_dest" class="form-control-static">
+                                                <em>
+                                                {{ $t('firefly.destination_account_reconciliation') }}
+                                                </em>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <standard-date
                                             v-model="transaction.date"
                                             :index="index"
                                             :error="transaction.errors.date"
@@ -121,6 +139,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
+                                    <!-- -->
                                     <amount
                                             :source="transaction.source_account"
                                             :destination="transaction.destination_account"
@@ -128,7 +147,7 @@
                                             :error="transaction.errors.amount"
                                             :transactionType="transactionType"
                                     ></amount>
-                                    <foreign-amount
+                                    <foreign-amount v-if="transactionType.toLowerCase() !== 'reconciliation'"
                                             :source="transaction.source_account"
                                             :destination="transaction.destination_account"
                                             v-model="transaction.foreign_amount"
@@ -184,7 +203,7 @@
                                 {{ $t('firefly.after_update_create_another') }}
                             </label>
                         </div>
-                        <div class="checkbox">
+                        <div class="checkbox" v-if="transactionType.toLowerCase() !== 'reconciliation'">
                             <label>
                                 <input v-model="storeAsNew" name="store_as_new" type="checkbox">
                                 {{ $t('firefly.store_as_new') }}
@@ -220,6 +239,10 @@
                     return amount * -1;
                 }
                 return amount;
+            },
+            roundNumber(amount, decimals) {
+                let multiplier = Math.pow(10, decimals);
+                return Math.round(amount * multiplier) / multiplier;
             },
             selectedSourceAccount(index, model) {
                 if (typeof model === 'string') {
@@ -367,20 +390,20 @@
                 }
 
                 this.transactions.push({
-                    transaction_journal_id: transaction.transaction_journal_id,
-                    description: transaction.description,
-                    date: transaction.date.substr(0, 10),
-                    amount: this.positiveAmount(transaction.amount),
-                    category: transaction.category_name,
-                    errors: {
-                        source_account: [],
-                        destination_account: [],
-                        description: [],
-                        amount: [],
-                        date: [],
-                        budget_id: [],
-                        foreign_amount: [],
-                        category: [],
+                                           transaction_journal_id: transaction.transaction_journal_id,
+                                           description: transaction.description,
+                                           date: transaction.date.substr(0, 10),
+                                           amount: this.roundNumber(this.positiveAmount(transaction.amount), transaction.currency_decimal_places),
+                                           category: transaction.category_name,
+                                           errors: {
+                                               source_account: [],
+                                               destination_account: [],
+                                               description: [],
+                                               amount: [],
+                                               date: [],
+                                               budget_id: [],
+                                               foreign_amount: [],
+                                               category: [],
                         piggy_bank: [],
                         tags: [],
                         // custom fields:
@@ -409,7 +432,7 @@
                         notes: transaction.notes
                     },
                     foreign_amount: {
-                        amount: this.positiveAmount(transaction.foreign_amount),
+                        amount: this.roundNumber(this.positiveAmount(transaction.foreign_amount), transaction.foreign_currency_decimal_places),
                         currency_id: transaction.foreign_currency_id
                     },
                     source_account: {

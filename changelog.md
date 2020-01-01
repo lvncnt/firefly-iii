@@ -2,6 +2,100 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [5.0.0 (API 1.0.0)] - 20xx-xx-xx
+
+*This version has not yet been released.* The latest available version is **5.0.0-alpha.2**.
+
+This version represents, if anything, a fresh start in the version numbering system so Firefly III will finally follow SemVer, for real this time.
+
+### Added
+- [Issue 2580](https://github.com/firefly-iii/firefly-iii/issues/2580) Users can now edit reconciliations.
+- [Issue 2723](https://github.com/firefly-iii/firefly-iii/issues/2723) You can now use rules that trigger on account numbers (and IBAN)
+- [Issue 2895](https://github.com/firefly-iii/firefly-iii/issues/2895) Another indicator for negative amounts.
+- [Issue 2901](https://github.com/firefly-iii/firefly-iii/issues/2901) Can select liability accounts when running rules.
+- [Issue 2893](https://github.com/firefly-iii/firefly-iii/issues/2893) Add config cache clear command to Docker build.
+- [Issue 2667](https://github.com/firefly-iii/firefly-iii/issues/2667) Option to export data from Firefly III
+- [Issue 2064](https://github.com/firefly-iii/firefly-iii/issues/2064) Ability to mass-delete tags.
+- Can now give accounts a location tag.
+- Firefly III now supports redis as cache backend.
+- Footer will warn you of alpha and beta versions.
+
+### Changed
+- [Issue 2776](https://github.com/firefly-iii/firefly-iii/issues/2776) Some charts now do relative scaling. Useful for large amounts.
+- [Issue 2702](https://github.com/firefly-iii/firefly-iii/issues/2702) More details on tags overview
+- [Issue 2919](https://github.com/firefly-iii/firefly-iii/issues/2919) Didn't support user's choice not to check for updates.
+- Fine tune the Docker container startup times using new environment variables.
+
+### Deprecated
+- Firefly III no longer supports the SFTP storage backend, nor does it support the ability to use both SFTP and local files as storage backends, because the
+ packages required are no longer maintained and will not work with Laravel 6.0. 
+
+### Removed
+- Firefly III will no longer be built for Sandstorm.
+- The Docker image is built from [a separate repository](http://github.com/firefly-iii/docker).
+- The Kubernetes files are stored in [a separate repository](https://github.com/firefly-iii/kubernetes).
+
+### Fixed
+- [Issue 2907](https://github.com/firefly-iii/firefly-iii/issues/2907) Bad date display in recurring transactions.
+- [Issue 2912](https://github.com/firefly-iii/firefly-iii/issues/2912) Redirect fix for bills.
+- [Issue 2874](https://github.com/firefly-iii/firefly-iii/issues/2874) More redirect issues fixed.
+- [Issue 2878](https://github.com/firefly-iii/firefly-iii/issues/2878) Typo in code of budget overview.
+- [Issue 2876](https://github.com/firefly-iii/firefly-iii/issues/2876) Trailing zeroes and other issues.
+- [Issue 2881](https://github.com/firefly-iii/firefly-iii/issues/2881) An error when only the title of a split transaction was bad.
+- [Issue 2924](https://github.com/firefly-iii/firefly-iii/issues/2924) Could not trigger rules when set to "update".
+- [Issue 2691](https://github.com/firefly-iii/firefly-iii/issues/2691) Fix to update recurring transactions with bad types.
+
+### Security
+- Nothing yet.
+
+### API
+- Nothing yet.
+
+
+## [4.8.2 (API 0.10.5)] - 2019-11-29
+
+After several alpha and beta versions (which were mainly released because I was
+farting around with the idea of doing these things) here's the final version
+of the latest release, 4.8.2. Several improvements and lots of bug fixes.
+
+### Added
+- You can now cash out a liability.
+- (Better) support for Kubernetes
+- Support for Swedish! 🇸🇪
+ 
+### Changed
+- [Issue 2835](https://github.com/firefly-iii/firefly-iii/issues/2835) Extended generic bank debit/credit indicator
+- Firefly III now comes in three channels: stable, beta and alpha. You can 
+   find the latest version for each channel on [this website](https://version.firefly-iii.org/).
+- Firefly III will use version.firefly-iii.org to check what the latest version is.
+- Firefly III is now built for ARM, ARM64 and AMD64 in one Docker build.
+ 
+### Fixed
+- [Issue 2783](https://github.com/firefly-iii/firefly-iii/issues/2783) Fixes issues with SQLite databases.
+- [Issue 2774](https://github.com/firefly-iii/firefly-iii/issues/2774) Bad redirect when using exotic ports.
+- [Issue 2780](https://github.com/firefly-iii/firefly-iii/issues/2780) Budget overview would show deleted entries.
+- [Issue 2771](https://github.com/firefly-iii/firefly-iii/issues/2771) Tags and piggy banks would not be created when recurring transactions were created.
+- Not all lists would sort accounts properly.
+- [Issue 2786](https://github.com/firefly-iii/firefly-iii/issues/2786) Nicolas fixed documentation links, thanks!
+- [Issue 2806](https://github.com/firefly-iii/firefly-iii/issues/2806) You can now skip one month again in bills.
+- [Issue 2796](https://github.com/firefly-iii/firefly-iii/issues/2796) Rewrote a chart on category page.
+- [Issue 2811](https://github.com/firefly-iii/firefly-iii/issues/2811) Description of tags was gone.
+- [Issue 2812](https://github.com/firefly-iii/firefly-iii/issues/2812) Bad redirect after tag deletion.
+- [Issue 2790](https://github.com/firefly-iii/firefly-iii/issues/2790) Form fixes for currencies.
+- [Issue 2651](https://github.com/firefly-iii/firefly-iii/issues/2651) Source account would not be removed if resubmitting the form.
+- Catch some integer conversion errors.
+- [Issue 2660](https://github.com/firefly-iii/firefly-iii/issues/2660) Various search and form issues.
+- [Issue 2807](https://github.com/firefly-iii/firefly-iii/issues/2807) Timendum fixed a lot of auto-completes, thanks!
+- [Issue 2820](https://github.com/firefly-iii/firefly-iii/issues/2820) Fix budget chart.
+- [Issue 2832](https://github.com/firefly-iii/firefly-iii/issues/2832) Issue with rules.
+- [Issue 2841](https://github.com/firefly-iii/firefly-iii/issues/2841) Issue with duplicate imports.
+- [Issue 2843](https://github.com/firefly-iii/firefly-iii/issues/2843) Issues with Chinese translations
+- [Issue 2852](https://github.com/firefly-iii/firefly-iii/issues/2852) Missing columns from budget overview
+- [Issue 2851](https://github.com/firefly-iii/firefly-iii/issues/2851) Missing chart data.
+
+ ### API
+ - Most API errors now have a number. See [this page](https://docs.firefly-iii.org/support/error_codes) for more details.
+
 ## [4.8.2-alpha.1 (API 0.10.5)] - 2019-11-03
 
 Normally I won't be detailling alpha versions in the changelog but this is a 
