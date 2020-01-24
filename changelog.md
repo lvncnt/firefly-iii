@@ -2,9 +2,7 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [5.0.0 (API 1.0.0)] - 20xx-xx-xx
-
-*This version has not yet been released.* The latest available version is **5.0.0-alpha.2**.
+## [5.0.0 (API 1.0.0)] - 2020-01-18
 
 This version represents, if anything, a fresh start in the version numbering system so Firefly III will finally follow SemVer, for real this time.
 
@@ -16,6 +14,7 @@ This version represents, if anything, a fresh start in the version numbering sys
 - [Issue 2893](https://github.com/firefly-iii/firefly-iii/issues/2893) Add config cache clear command to Docker build.
 - [Issue 2667](https://github.com/firefly-iii/firefly-iii/issues/2667) Option to export data from Firefly III
 - [Issue 2064](https://github.com/firefly-iii/firefly-iii/issues/2064) Ability to mass-delete tags.
+- [Issue 2920](https://github.com/firefly-iii/firefly-iii/issues/2920) [issue 2981](https://github.com/firefly-iii/firefly-iii/issues/2981) Firefly III now generates a nonce used by all inline scripts.
 - Can now give accounts a location tag.
 - Firefly III now supports redis as cache backend.
 - Footer will warn you of alpha and beta versions.
@@ -25,6 +24,7 @@ This version represents, if anything, a fresh start in the version numbering sys
 - [Issue 2702](https://github.com/firefly-iii/firefly-iii/issues/2702) More details on tags overview
 - [Issue 2919](https://github.com/firefly-iii/firefly-iii/issues/2919) Didn't support user's choice not to check for updates.
 - Fine tune the Docker container startup times using new environment variables.
+- Firefly III's demo site no longer uses Google Analytics to track visitors, but Matomo.
 
 ### Deprecated
 - Firefly III no longer supports the SFTP storage backend, nor does it support the ability to use both SFTP and local files as storage backends, because the
@@ -44,12 +44,16 @@ This version represents, if anything, a fresh start in the version numbering sys
 - [Issue 2881](https://github.com/firefly-iii/firefly-iii/issues/2881) An error when only the title of a split transaction was bad.
 - [Issue 2924](https://github.com/firefly-iii/firefly-iii/issues/2924) Could not trigger rules when set to "update".
 - [Issue 2691](https://github.com/firefly-iii/firefly-iii/issues/2691) Fix to update recurring transactions with bad types.
-
-### Security
-- Nothing yet.
+- [Issue 2941](https://github.com/firefly-iii/firefly-iii/issues/2941) Not all notes were decoded correctly.
+- [Issue 2945](https://github.com/firefly-iii/firefly-iii/issues/2945) Budget field would be empty when editing transaction.
+- [Issue 2950](https://github.com/firefly-iii/firefly-iii/issues/2950) Error in chart (null pointer)
+- [Issue 2983](https://github.com/firefly-iii/firefly-iii/issues/2983) Debug info left in bills overview caused some issues.
+- [Issue 2980](https://github.com/firefly-iii/firefly-iii/issues/2980) Issues with console export.
+- [Issue 2987](https://github.com/firefly-iii/firefly-iii/issues/2987) Issue with creating expense / revenue accounts.
+- [Issue 2993](https://github.com/firefly-iii/firefly-iii/issues/2993) Issue with Chinese locale on Heroku
 
 ### API
-- Nothing yet.
+- Various endpoints are better documented.
 
 
 ## [4.8.2 (API 0.10.5)] - 2019-11-29
@@ -930,11 +934,14 @@ This version was superseeded by v4.7.5.3 because of a critical bug in the proxy-
 - [Issue 1442](https://github.com/firefly-iii/firefly-iii/issues/1442), issues with editing a split deposit.
 - [Issue 1452](https://github.com/firefly-iii/firefly-iii/issues/1452), date range problems with tags.
 - [Issue 1458](https://github.com/firefly-iii/firefly-iii/issues/1458), same for transactions.
+- [Issue 2956](https://github.com/firefly-iii/firefly-iii/issues/2956) Switch start and end date automagically when end is before start.
+- [Issue 2975](https://github.com/firefly-iii/firefly-iii/issues/2975) Division by zero.
+- [Issue 2966](https://github.com/firefly-iii/firefly-iii/issues/2966) Could not render description auto-complete.
+- [Issue 2976](https://github.com/firefly-iii/firefly-iii/issues/2976) Make budget dropdown in the same order as the budget list.
 
 
 ### Security
 - [Issue 1415](https://github.com/firefly-iii/firefly-iii/issues/1415), will email you when OAuth2 keys are generated.
-
 
 ## [4.7.3.2] - 2018-05-16
 ### Fixed
